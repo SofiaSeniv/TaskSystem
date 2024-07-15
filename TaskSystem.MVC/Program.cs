@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaskSystem.Infrastructure;
+using TaskSystem.Infrastructure.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<TaskSystemDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 var app = builder.Build();
 
